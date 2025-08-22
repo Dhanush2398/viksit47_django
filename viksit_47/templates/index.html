@@ -1,0 +1,759 @@
+ {% extends "base.html" %}
+{% load static %}
+ {% block title %}Home - Viksit47{% endblock %}
+ {% block content %} 
+
+    
+    <div class="banner-area banner-style-one content-top-heading less-paragraph text-normal">
+        <div id="bootcarousel" class="carousel slide animate_text carousel-fade" data-ride="carousel">
+
+         <!-- Wrapper for slides -->
+<div class="carousel-inner text-light carousel-zoom">
+
+    <div class="carousel-item active">
+        <div class="slider-thumb bg-fixed" style="background-image: url('{% static "img/slider/1.jpg" %}');"></div>
+        <div class="box-table shadow dark">
+            <div class="box-cell">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="content">
+                                <h3 data-animation="animated slideInLeft">Empowering Rural Youth</h3>
+                                <h1 data-animation="animated slideInUp">Your Gateway to Competitive Exam Success</h1>
+                                <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="#">Start Practicing</a>
+                                <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="#">View Courses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-item">
+        <div class="slider-thumb bg-fixed" style="background-image: url('{% static "img/slider/2.jpg" %}');"></div>
+        <div class="box-table shadow dark">
+            <div class="box-cell">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="content">
+                                <h3 data-animation="animated slideInLeft">Practice. Improve. Achieve.</h3>
+                                <h1 data-animation="animated slideInUp">High-Quality Mock Tests for Banking, SSC & More</h1>
+                                <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="#">Explore Exams</a>
+                                <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="#">View Courses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- End Wrapper for slides -->
+
+<button class="carousel-control-prev left carousel-control" type="button" data-bs-target="#bootcarousel" data-bs-slide="prev">
+    <i class="fa fa-angle-left"></i>
+    <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next right carousel-control" type="button" data-bs-target="#bootcarousel" data-bs-slide="next">
+    <i class="fa fa-angle-right"></i>
+    <span class="visually-hidden">Next</span>
+</button>
+  </div>
+    </div>
+
+
+   
+<div id="courses" class="popular-courses default-padding without-carousel">
+    <div class="container">
+        <div class="row">
+            <div class="site-heading text-center">
+                <div class="col-lg-8 offset-lg-2">
+                    <h2>Mock Tests</h2>
+                </div>
+            </div>
+        </div>
+        <div class="popular-courses-items">
+            <div class="row">
+                
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item" style="background-color: #002147;">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/agronomy.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">                                   
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Agronomy Mock Test</a></h4>
+                             <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/2.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Plant Science Mock Test</a></h4>
+                            <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/3.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Plant Pathology Mock Test</a></h4>
+                            <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/4.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Entomology Mock Test</a></h4>
+                              <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/5.jpeg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Soil Science Mock Test</a></h4>
+                             <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/6.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Genetic Breeding Mock Test</a></h4>                                
+                             <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/7.webp' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Seed Science Mock Test</a></h4>
+                             <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+                <!-- Single Item -->
+                <div class="col-lg-4 col-md-6 equal-height">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#">
+                                <img src="{% static 'img/test/8.jpg' %}" alt="Thumb">
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <div class="info">
+                            <div class="author-info">
+                                <div class="others">
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4><a href="#">Plant Breeding Mock Test</a></h4>                                
+                             <div class="bottom-info">
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'mock' %}">Take a Test</a>
+                           {% else %}
+                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
+                          {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Item -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Popular Courses -->
+
+
+<div class="about-area default-padding">
+    <div class="container">
+        <div class="about-info">
+            <div class="row">
+                <div class="col-lg-6 thumb">
+                    <img src="{% static 'img/7.jpg' %}" alt="About Viksit47">
+                </div>
+                <div class="col-lg-6 info">
+                    <h5>About Us</h5>
+                    <h2>Welcome to Viksit47 – Empowering Rural Youth Through Education</h2>
+                    <p>
+                        Viksit47 is your trusted online platform for competitive exam preparation, dedicated to helping rural students and professionals achieve their career goals. 
+                        We provide expert-curated mock tests, real-time performance analysis, and a wide range of study resources for banking, SSC, and other competitive exams.
+                    </p>
+                    <p>
+                        Our mission is simple – to make high-quality education accessible to everyone, no matter where they live. 
+                        With Viksit47, you can practice anytime, track your progress, and gain the confidence you need to succeed. 
+                        We believe that education is the most powerful tool to unlock opportunities and transform lives.
+                    </p>
+                    <a href="#" class="btn btn-dark border btn-md">Contact</a>
+                </div>
+            </div>
+
+            <div class="our-features">
+                <div class="row">
+
+                    <!-- Feature 1 -->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="item mariner">
+                            <div class="icon">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <div class="info">
+                                <h4 style="color: #FFB606;">Qualified Mentors</h4>
+                                <p style="color: #fff;">Learn from experienced educators who guide you step-by-step towards exam success.</p>
+                                <a href="#" style="color: #FFB606;">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="item java">
+                            <div class="icon">
+                                <i class="fa-solid fa-laptop-file"></i>
+                            </div>
+                            <div class="info">
+                                <h4 style="color: #FFB606;">Smart Practice Tests</h4>
+                                <p style="color: #fff;">Take mock exams that simulate real test environments with instant feedback.</p>
+                                <a href="#" style="color: #FFB606;">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="item malachite">
+                            <div class="icon">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </div>
+                            <div class="info">
+                                <h4 style="color: #FFB606;">Accessible Education</h4>
+                                <p style="color: #fff;">Learn anytime, anywhere, breaking barriers for rural students across the country.</p>
+                                <a href="#" style="color: #FFB606;">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End About -->
+
+
+    <section id="event" class="event-area default-padding">
+        <div class="container">
+            <div class="row">
+                <div class="site-heading text-center">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h2>Courses</h2>
+                        <p>
+                            Stay ahead with our upcoming courses designed to enhance your skills and knowledge. From agriculture basics to advanced farming techniques, explore programs that prepare you for real-world success. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="event-items">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/9.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Agronomy</a>
+                                </h4>
+                                 <p> 1 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/10.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Plant Science</a>
+                                </h4>
+                                <p>4 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                     <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/11.webp' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Plant Pathology</a>
+                                </h4>
+                                <p>3 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/12.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Genetic Breeding</a>
+                                </h4>
+                                <p>2 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                     <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/13.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Entomology</a>
+                                </h4>
+                                <p>5 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/14.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Soil Science</a>
+                                </h4>
+                                <p>3 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                     <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/15.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Plant Breeding</a>
+                                </h4>
+                                <p>1 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Single Item -->
+                        <div class="item vertical">
+                            <div class="thumb">
+                                <img src="{% static '/img/test/16.jpg' %}" alt="Thumb">
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Seed Science</a>
+                                </h4>
+                                <p>4 course(s)</p>
+                                <a href="contact.html" class="btn btn-dark effect btn-sm">
+                                    <i class="fas fa-chart-bar"></i> Contact
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Single Item -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Event -->
+
+
+<div class="wcs-area bg-dark text-light">
+    <div class="container-full">
+        <div class="row">
+            <div class="col-lg-6 thumb bg-cover" style="background-image: url('{% static "img/5.jpg" %}');"></div>
+
+            <div class="col-lg-6 content">
+                <div class="site-heading text-left">
+                    <h2>Why Choose Viksit47</h2>
+                    <p>
+                        At Viksit47, we are committed to helping rural students and professionals achieve their dreams 
+                        by providing affordable, accessible, and high-quality competitive exam preparation tools. 
+                        From practice tests to performance tracking, we ensure you are ready for success.
+                    </p>
+                </div>
+
+                <!-- item -->
+                <div class="item">
+                    <div class="icon">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div class="info">
+                        <h4>
+                            <a href="#">Expert-Curated Mock Tests</a>
+                        </h4>
+                        <p>
+                            Practice with exam patterns designed by experts to match real competitive exams like Banking, SSC, and more.
+                        </p>
+                    </div>
+                </div>
+                <!-- item -->
+
+                <!-- item -->
+                <div class="item">
+                    <div class="icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="info">
+                        <h4>
+                            <a href="#">Real-Time Performance Analysis</a>
+                        </h4>
+                        <p>
+                            Get instant feedback and detailed reports to understand your strengths and areas for improvement.
+                        </p>
+                    </div>
+                </div>
+                <!-- item -->
+
+                <!-- item -->
+                <div class="item">
+                    <div class="icon">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="info">
+                        <h4>
+                            <a href="#">Guidance from Experienced Mentors</a>
+                        </h4>
+                        <p>
+                            Learn from professionals who provide insights, strategies, and motivation to help you succeed.
+                        </p>
+                    </div>
+                </div>
+                <!-- item -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Why Choose Us -->
+
+
+
+   
+
+    
+    <div id="blog" class="blog-area default-padding bottom-less">
+        <div class="container">
+            <div class="row">
+                <div class="site-heading text-center">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h2 style="color: #002147;">Our Blog</h2>
+                        <p>
+                             Discover expert tips, success stories, and the latest trends in agriculture. Our blog shares valuable insights to help farmers, students, and agri-entrepreneurs stay informed and inspired.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-items">
+                <div class="row">
+
+                    <!-- Single Item -->
+                    <div class="col-lg-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="{% static '/img/2.jpg' %}" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Tips to Crack Mock Tests</a>
+                                </h4>
+                                <p>
+                                   Discover effective strategies to improve your mock test scores and manage time efficiently.
+                                </p>
+                                <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-lg-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="{% static '/img/3.jpg' %}" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Time Management Hacks</a>
+                                </h4>
+                                <p>
+                                    Learn how to make the most of your study time with these expert-approved time hacks.
+                                </p>
+                                <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-lg-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="{% static '/img/4.jpg' %}" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <h4>
+                                    <a href="#">Top Exams in 2025</a>
+                                </h4>
+                                <p>
+                                   Explore the most important competitive exams coming up and how to prepare for them.
+                                </p>
+                                <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Blog -->
+
+ {% endblock content %}

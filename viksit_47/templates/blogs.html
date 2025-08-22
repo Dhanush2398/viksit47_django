@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blogs - Viksit47{% endblock %}
+
+{% block content %}
+
+<!-- Start Breadcrumb -->
+<div class="breadcrumb-area shadow dark text-center bg-fixed text-light" 
+     style="background-image: url('{% static "img/1.jpg" %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Blogs</h1>
+                <ul class="breadcrumb">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="active">Blogs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumb -->
+
+<!-- Start Blog -->
+<div id="blog" class="blog-area default-padding bottom-less">
+    <div class="container">
+        <div class="row">
+            <div class="site-heading text-center">
+                <div class="col-lg-8 offset-lg-2">
+                    <h2 style="color: #002147;">Our Blog</h2>
+                    <p>
+                        Discover expert tips, success stories, and the latest trends in agriculture. Our blog shares valuable insights to help farmers, students, and agri-entrepreneurs stay informed and inspired.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="blog-items">
+            <div class="row">
+
+                <!-- Single Item -->
+                <div class="col-lg-4 single-item">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#"><img src="{% static 'img/2.jpg' %}" alt="Thumb"></a>
+                        </div>
+                        <div class="info">
+                            <h4>
+                                <a href="#">Tips to Crack Mock Tests</a>
+                            </h4>
+                            <p>
+                                Discover effective strategies to improve your mock test scores and manage time efficiently.
+                            </p>
+                            <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Item -->
+                <div class="col-lg-4 single-item">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#"><img src="{% static 'img/3.jpg' %}" alt="Thumb"></a>
+                        </div>
+                        <div class="info">
+                            <h4>
+                                <a href="#">Time Management Hacks</a>
+                            </h4>
+                            <p>
+                                Learn how to make the most of your study time with these expert-approved time hacks.
+                            </p>
+                            <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Item -->
+                <div class="col-lg-4 single-item">
+                    <div class="item">
+                        <div class="thumb">
+                            <a href="#"><img src="{% static 'img/4.jpg' %}" alt="Thumb"></a>
+                        </div>
+                        <div class="info">
+                            <h4>
+                                <a href="#">Top Exams in 2025</a>
+                            </h4>
+                            <p>
+                                Explore the most important competitive exams coming up and how to prepare for them.
+                            </p>
+                            <a href="#">Read More <i class="fas fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Blog -->
+
+{% endblock content %}
