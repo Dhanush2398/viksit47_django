@@ -10,9 +10,6 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, "index.html")
 
-def courses(request):
-    return render(request, "courses.html")
-
 def exams(request):
     return render(request, "exams.html")
 

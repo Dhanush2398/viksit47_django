@@ -21,7 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('courses.html', views.courses, name='courses'),
     path('exams.html', views.exams, name='exams'),
      path('mock.html', views.mock, name='mock'),
     path('blogs.html', views.blogs, name='blogs'),
@@ -30,8 +29,10 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('profile/', views.profile_view, name='profile'),
-   path("mock/", views.mock, name="mock"),
+    path("mock/", views.mock, name="mock"),
     path("submit-mock/", views.submit_mock, name="submit_mock"),
-      path("result/", views.result, name="result"),
+     path("result/", views.result, name="result"),
+     
+      
 ]
 
