@@ -29,10 +29,10 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('profile/', views.profile_view, name='profile'),
-    path("mock/", views.mock, name="mock"),
+    path('mock/', views.mock_redirect, name='mock_redirect'), 
     path("submit-mock/", views.submit_mock, name="submit_mock"),
-     path("result/", views.result, name="result"),
-     
-      
+     path("mock/<int:mock_id>/", views.mock, name="mock"),
+    path('mock/', views.mock_redirect, name='mock_redirect'),
+      path('mock/<int:mock_id>/submit/', views.submit_mock, name='submit_mock'),
 ]
 

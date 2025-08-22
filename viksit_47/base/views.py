@@ -1,8 +1,8 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from .models import Question, Option
+from .models import Question, Option,Mock
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -67,20 +67,45 @@ def login_view(request):
 
     return render(request, 'login.html')
 
-def mock(request):
-    questions = Question.objects.prefetch_related("options").all()
-    return render(request, "mock.html", {"questions": questions})
+def home(request):
+    mocks = Mock.objects.all() 
+    return render(request, "index.html", {
+        "mocks": mocks,
+    })
 
-def submit_mock(request):
+def mock_redirect(request):
+    
+    mock = Mock.objects.first()
+    if mock:
+        return redirect('mock', mock_id=mock.id)
+    return redirect('home')
+
+
+def mock(request, mock_id):
+    exam = get_object_or_404(Mock, id=mock_id)
+    questions = Question.objects.filter(mock=exam).prefetch_related("options")
+    return render(request, "mock.html", {
+        "exam": exam,
+        "questions": questions
+    })
+
+def exams(request): 
+    mocks = Mock.objects.all()
+    return render(request, "exams.html", {"mocks": mocks})
+
+def submit_mock(request, mock_id):  # Accept mock_id
+    mock_exam = get_object_or_404(Mock, id=mock_id)  # Fetch the correct exam
+
     if request.method == "POST":
-        questions = Question.objects.prefetch_related("options").all()
+        questions = Question.objects.prefetch_related("options").filter(mock=mock_exam)
+
         total = questions.count()
         attempted = 0
         correct = 0
 
         for q in questions:
             selected_option_id = request.POST.get(f"q{q.id}")
-            if selected_option_id:  
+            if selected_option_id:
                 attempted += 1
                 option = Option.objects.get(id=selected_option_id)
                 if option.is_correct:
@@ -90,18 +115,11 @@ def submit_mock(request):
             "total": total,
             "attempted": attempted,
             "correct": correct,
+            "mock": mock_exam,
+            "questions": questions
         }
+
         return render(request, "result.html", context)
 
-    return redirect("mock")  
-
-
-def result(request):
-   
-    score = request.session.get("score", 0)
-    total = request.session.get("total", 0)
-
-    return render(request, "result.html", {
-        "score": score,
-        "total": total
-    })
+    # If GET request, redirect to the exam page
+    return redirect('mock', mock_id=mock_id)

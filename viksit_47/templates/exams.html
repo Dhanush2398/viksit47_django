@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<!-- Start Popular Courses -->
+<!-- Start Mock Tests -->
 <div id="courses" class="popular-courses default-padding without-carousel">
     <div class="container">
         <div class="row">
@@ -18,242 +18,44 @@
         <div class="popular-courses-items">
             <div class="row">
 
-                <!-- Single Item -->
+                {% for mock in mocks %}
                 <div class="col-lg-4 col-md-6 equal-height">
                     <div class="item" style="background-color: #002147;">
                         <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/agronomy.jpg' %}" alt="Thumb"></a>
+                            <a href="#"><img src="{{ mock.image.url }}" alt="{{ mock.title }}"></a>
                         </div>
                         <div class="info">
                             <div class="author-info">
                                 <div class="others">
                                     <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>4.5</span>
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= mock.rating|default:4 %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="fas fa-star-half-alt"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <span>{{ mock.rating|default:"4.5" }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <h4><a href="#">Agronomy Mock Test</a></h4>
+                            <h4><a href="#">{{ mock.title }}</a></h4>
                             <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plant Science -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/2.jpg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>5</span>
-                                    </div>
-                                </div>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'mock' mock.id %}">Take a Test</a>
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={% url 'mock' mock.id %}">Login to Take Test</a>
+                                {% endif %}
                             </div>
-                            <h4><a href="#">Plant Science Mock Test</a></h4>
-                             <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Plant Pathology -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/3.jpg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span>4.9</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Plant Pathology Mock Test</a></h4>
-                            <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Entomology -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/4.jpg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>4.4</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Entomology Mock Test</a></h4>
-                            <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Soil Science -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/5.jpeg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Soil Science Mock Test</a></h4>
-                           <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Genetic Breeding -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/6.jpg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>4.6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Genetic Breeding Mock Test</a></h4>
-                             <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Seed Science -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/7.webp' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>5</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Seed Science Mock Test</a></h4>
-                            <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plant Breeding -->
-                <div class="col-lg-4 col-md-6 equal-height">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="#"><img src="{% static 'img/test/8.jpg' %}" alt="Thumb"></a>
-                        </div>
-                        <div class="info">
-                            <div class="author-info">
-                                <div class="others">
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>4.6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4><a href="#">Plant Breeding Mock Test</a></h4>
-                             <div class="bottom-info">
-                            {% if user.is_authenticated %}
-                              <a href="{% url 'mock' %}">Take a Test</a>
-                           {% else %}
-                              <a href="{% url 'login' %}?next={% url 'mock' %}">Login to Take Test</a>
-                          {% endif %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
         </div>
     </div>
 </div>
-<!-- End Popular Courses -->
+<!-- End Mock Tests -->
 
 {% endblock content %}
