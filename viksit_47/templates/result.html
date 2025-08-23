@@ -1,12 +1,20 @@
+
 {% extends "base.html" %}
 {% block title %}Result{% endblock %}
 
 {% block content %}
-<div class="result-container">
-    <h2>Your Result</h2>
-    <p>Total Questions: {{ total }}</p>
-    <p>Attempted: {{ attempted }}</p>
-    <p>Correct: {{ correct }}</p>
-    <a href="{% url 'home' %}">Try Again</a>
+<div class="result-box">
+    <h2>Test Result</h2>
+    <p><strong>Test:</strong> {{ mock.title }}</p>
+    <p><strong>Difficulty:</strong> {{ mock.get_difficulty_display }}</p>
+    <p><strong>Total Questions:</strong> {{ total }}</p>
+    <p><strong>Attempted:</strong> {{ attempted }}</p>
+    <p><strong>Correct:</strong> {{ correct }}</p>
+    <p><strong>Score:</strong> {{ correct }}/{{ total }}</p>
+
+    <a href="{% url 'profile' %}" class="btn btn-primary">Go to Profile</a>
 </div>
+
+
+
 {% endblock %}

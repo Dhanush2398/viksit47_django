@@ -17,41 +17,39 @@
         Attempted: <span id="attemptedQ">0</span>
     </div>
 
-    <form id="quizForm" method="POST" action=>"{% url 'submit_mock' exam.id %}"
-        {% csrf_token %}
-        <div id="quiz-box">
-            {% for q in questions %}
-            <div class="question" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
-                <div class="question-header">{{ forloop.counter }}. {{ q.text }}</div>
-                {% if q.image %}
-                <img src="{{ q.image.url }}" class="question-img">
-                {% endif %}
-                <ul class="options">
-                    {% for option in q.options.all %}
-                    <li>
-                        <input type="radio"
-                               name="q{{ q.id }}"
-                               value="{{ option.id }}"
-                               id="q{{ q.id }}_{{ forloop.counter0 }}">
-                        <label for="q{{ q.id }}_{{ forloop.counter0 }}">{{ option.text }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
+<form id="quizForm" method="POST" action="{% url 'submit_mock' exam.id %}">
+    {% csrf_token %}
+    <div id="quiz-box">
+        {% for q in questions %}
+        <div class="question" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+            <div class="question-header">{{ forloop.counter }}. {{ q.text }}</div>
+            {% if q.image %}
+            <img src="{{ q.image.url }}" class="question-img">
+            {% endif %}
+            <ul class="options">
+                {% for option in q.options.all %}
+                <li>
+                    <input type="radio" name="q{{ q.id }}" value="{{ option.id }}" id="q{{ q.id }}_{{ forloop.counter0 }}">
+                    <label for="q{{ q.id }}_{{ forloop.counter0 }}">{{ option.text }}</label>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
+        {% endfor %}
+    </div>
 
-        <div class="navigation">
-            <button type="button" id="prev-btn" onclick="prevPage()">Previous</button>
-            <button type="button" id="next-btn" onclick="nextPage()">Next</button>
-            <button type="submit">Submit</button>
-        </div>
-    </form>
+    <div class="navigation">
+        <button type="button" id="prev-btn" onclick="prevPage()">Previous</button>
+        <button type="button" id="next-btn" onclick="nextPage()">Next</button>
+        <button type="submit">Submit</button>
+    </div>
+</form>
 
-    <div id="result" class="result"></div>
+<div id="result" class="result"></div>
+
 </div>
 
-<!-- Countdown Timer Script -->
+
 <script>
   
     let timeLeft = {{ exam.time_limit }} * 60; 
@@ -72,7 +70,7 @@
         timeLeft--;
     }
 
-    updateTimer(); // show immediately
+    updateTimer(); 
     const timerInterval = setInterval(updateTimer, 1000);
 </script>
 

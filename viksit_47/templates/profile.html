@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Contact - Viksit47{% endblock %}
+{% block title %}Profile - Viksit47{% endblock %}
 
 {% block content %}
 
@@ -21,30 +21,34 @@
     </div>
 </div>
 <!-- End Breadcrumb -->
+
 <!-- Start Students Profile -->
 <div class="students-profiel adviros-details-area default-padding">
     <div class="container">
         <div class="row">
             <div class="col-lg-7 info main-content">
-                <!-- Star Tab Info -->
+                <!-- Start Tab Info -->
                 <div class="tab-info">
                     <!-- Tab Nav -->
                     <ul class="nav nav-tabs nav-pills" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                           <button class="nav-link active" id="tab_1" data-bs-toggle="tab" data-bs-target="#tabs_1" type="button" role="tab" aria-controls="tabs_1" aria-selected="true">Dashboard</button>
                         </li>
-                      
-                         <li class="nav-item" role="presentation">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="tab_2" data-bs-toggle="tab" data-bs-target="#tabs_2" type="button" role="tab" aria-controls="tabs_2" aria-selected="false">Orders</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
                           <button class="nav-link" id="tab_3" data-bs-toggle="tab" data-bs-target="#tabs_3" type="button" role="tab" aria-controls="tabs_3" aria-selected="false">Profile</button>
                         </li>
-                          <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="tab_2" data-bs-toggle="tab" data-bs-target="#tabs_2" type="button" role="tab" aria-controls="tabs_2" aria-selected="false">Orders</button>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="tab_results" data-bs-toggle="tab" data-bs-target="#tabs_results" type="button" role="tab" aria-controls="tabs_results" aria-selected="false">Results</button>
                         </li>
                         <li class="nav-item" role="presentation">
                           <button class="nav-link" id="tab_4" data-bs-toggle="tab" data-bs-target="#tabs_4" type="button" role="tab" aria-controls="tabs_4" aria-selected="false">Edit Profile</button>
                         </li>
-                      </ul>
+                    </ul>
                     <!-- End Tab Nav -->
+
                     <!-- Start Tab Content -->
                     <div class="tab-content tab-content-info" id="myTabContent">
                         <!-- Dashboard Tab -->
@@ -57,18 +61,13 @@
                                     Our mission is simple – to make high-quality education accessible to everyone, no matter where they live. With Viksit47, you can practice anytime, track your progress, and gain the confidence you need to succeed. We believe that education is the most powerful tool to unlock opportunities and transform lives.
                                 </p>
                                 <ul>
-                                    <li>
-                                        Contact <span>+91 98765 43210</span>
-                                    </li>
-                                    <li>
-                                        Email <span>support@viksit47.com</span>
-                                    </li>
-                                    <li>
-                                        Address <span>Bengaluru, Karnataka, India</span>
-                                    </li>
+                                    <li>Contact <span>+91 98765 43210</span></li>
+                                    <li>Email <span>support@viksit47.com</span></li>
+                                    <li>Address <span>Bengaluru, Karnataka, India</span></li>
                                 </ul>
                             </div>
                         </div>
+
                         <!-- Orders Tab -->
                         <div class="tab-pane fade" id="tabs_2" role="tabpanel" aria-labelledby="tab_2">
                             <div class="info title">
@@ -110,26 +109,58 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Add Profile Tab Content -->
-<div class="tab-pane fade" id="tabs_3" role="tabpanel" aria-labelledby="tab_3">
+
+                        <!-- Profile Tab -->
+                        <div class="tab-pane fade" id="tabs_3" role="tabpanel" aria-labelledby="tab_3">
+                            <div class="info title">
+                                <h4>Student Profile</h4>
+                                <ul>
+                                    <li>Name : {{ user.get_full_name|default:user.username }}</li>
+                                    <li>Email : {{ user.email }}</li>
+                                    <li>Phone Number : {{ user.profile.phone|default:"Not provided" }}</li>
+                                    <li>Address : {{ user.profile.address|default:"Not provided" }}</li>
+                                </ul>
+                            </div>
+                        </div>
+<!-- Results Tab -->
+<div class="tab-pane fade" id="tabs_results" role="tabpanel" aria-labelledby="tab_results">
     <div class="info title">
-        <h4>Student Profile</h4>
-        <ul>
-            <li>
-                Name : Rahul Sharma
-            </li>
-            <li>
-                Email : rahul.sharma@example.com
-            </li>
-            <li>
-                Phone Number : +91 98765 43210
-            </li>
-            <li>
-                Address : Bengaluru, Karnataka, India
-            </li>
-        </ul>
+        <h4 class="mb-3">📊 Test Results</h4>
+        <div class="result-history">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Test Name</th>
+                        <th>Total Qs</th>
+                        <th>Attempted</th>
+                        <th>Correct</th>
+                        <th>Score (%)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                {% for res in request.user.mockresult_set.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ res.mock.title }}</td>
+                <td>{{ res.total }}</td>
+                <td>{{ res.attempted }}</td>
+                <td>{{ res.correct }}</td>
+                <td>{{ res.correct|floatformat:2 }}/{{ res.total }} ({{ res.correct|divisibleby:res.total|yesno:"100,0" }}%)</td>
+                <td>{{ res.created_at|date:"d M Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No past results yet.</td>
+            </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
                         <!-- Edit Profile Tab -->
                         <div class="tab-pane fade" id="tabs_4" role="tabpanel" aria-labelledby="tab_4">
                             <div class="info title">
@@ -169,17 +200,17 @@
                                         <form action="#" class="contact-form">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <input class="form-control" placeholder="Choose Password" type="text">
+                                                    <input class="form-control" placeholder="Choose Password" type="password">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <input class="form-control" placeholder="Retype Password" type="text">
+                                                    <input class="form-control" placeholder="Retype Password" type="password">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <input class="form-control" placeholder="Old Password" type="text">
+                                                    <input class="form-control" placeholder="Old Password" type="password">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -202,7 +233,5 @@
     </div>
 </div>
 <!-- End Students Profile -->
-
-
 
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Mock(models.Model):
     DIFFICULTY_CHOICES = [
@@ -32,3 +33,22 @@ class Option(models.Model):
     def __str__(self):
         return f"{self.text} ({'Correct' if self.is_correct else 'Wrong'})"
 
+
+class MockResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mock = models.ForeignKey("Mock", on_delete=models.CASCADE)
+    
+    total = models.IntegerField(default=0)       
+    attempted = models.IntegerField(default=0)  
+    correct = models.IntegerField(default=0)     
+    score = models.FloatField(default=0)       
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.total > 0:
+            self.score = (self.correct / self.total) * 100
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.mock.title} ({self.score:.2f}%)"
