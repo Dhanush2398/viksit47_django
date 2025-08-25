@@ -9018,7 +9018,7 @@ nav.navbar.validnavs .navbar-brand > img {
   color: #0f172a;
 }
 
-/* Meta info as badges */
+
 .exam-details p {
   display: inline-block;
   margin: 6px 10px 0 0;
@@ -9030,7 +9030,7 @@ nav.navbar.validnavs .navbar-brand > img {
   border-radius: 20px;
 }
 
-/* Countdown pill */
+
 #countdown {
   display: inline-block;
   padding: 8px 14px;
@@ -9039,27 +9039,27 @@ nav.navbar.validnavs .navbar-brand > img {
   font-weight: 600;
   text-align: center;
   color: #ffffff;
-  background: #2563eb; /* blue */
+  background: #2563eb; 
   border-radius: 10px;
   border: 1px solid #1d4ed8;
   animation: pulse 1.8s ease-in-out infinite;
 }
 
-/* Emphasize the "Time Left" line */
+
 .exam-details p:has(#countdown) {
   background: #e0ecff;
   border-color: #c7d7ff;
   color: #1d4ed8;
 }
 
-/* Pulse animation for countdown */
+
 @keyframes pulse {
   0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
   70%  { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
   100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
 }
 
-/* Responsive */
+
 @media (max-width: 500px) {
   .exam-details {
     padding: 15px 18px;
