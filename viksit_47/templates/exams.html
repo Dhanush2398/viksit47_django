@@ -22,7 +22,12 @@
                 <div class="col-lg-4 col-md-6 equal-height">
                     <div class="item" style="background-color: #002147;">
                         <div class="thumb">
-                            <a href="#"><img src="{{ mock.image.url }}" alt="{{ mock.title }}"></a>
+                              <a href="#">
+                                  {% if mock.image %}
+                                  <img src="{{ mock.image.url }}" alt="{{ mock.title }}">
+                                 {% else %}
+                                <img src="{% static 'img/default.jpg' %}" alt="No image available">
+                             {% endif %}</a>
                         </div>
                         <div class="info">
                             <div class="author-info">
