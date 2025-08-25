@@ -6,7 +6,7 @@
 {% block content %}
 
 <style>
-/* Table Wrapper */
+
 .result-history {
     overflow-x: auto;
     border-radius: 12px;
@@ -14,7 +14,7 @@
     background: #fff;
 }
 
-/* Table Header */
+
 .result-history table.table thead {
     background: linear-gradient(135deg, #002147, #00162d) !important;
     color: #FFD133 !important;
@@ -27,7 +27,7 @@
     padding: 12px !important;
 }
 
-/* Table Body */
+
 .result-history table.table tbody td {
     border: 1px solid #ddd !important;
     padding: 12px !important;
@@ -36,22 +36,57 @@
     color: #002147;
 }
 
-/* Odd Rows */
-.result-history table.table tbody tr:nth-child(odd) {
-    background-color: #fef6e0 !important; /* light yellow-ish for odd rows */
+
+.result-history table.table tr.score-high td {
+    background-color: #28a745 !important; 
+    color: white !important;
 }
 
-/* Even Rows */
-.result-history table.table tbody tr:nth-child(even) {
-    background-color: #ffffff !important; /* white for even rows */
+.result-history table.table tr.score-medium td {
+    background-color: #ffc107 !important; 
+    color: black !important;
 }
 
-/* Hover Effect */
-.result-history table.table tbody tr:hover {
-    background-color: rgba(0, 33, 71, 0.1) !important;
+.result-history table.table tr.score-low td {
+    background-color: #dc3545 !important; 
+    color: white !important;
 }
 
-/* Responsive */
+
+.result-history table.table tbody tr:not(.score-high):not(.score-medium):not(.score-low):nth-child(odd) td {
+    background-color: #fef6e0 !important; 
+    color: #002147 !important;
+}
+
+.result-history table.table tbody tr:not(.score-high):not(.score-medium):not(.score-low):nth-child(even) td {
+    background-color: #ffffff !important; 
+    color: #002147 !important;
+}
+
+
+.result-history table.table tbody tr:hover td {
+    background-color: rgba(255, 193, 7, 0.2) !important; /* light amber hover */
+    color: #002147 !important;
+}
+
+.score-bar {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 6px;
+    text-align: right;
+    padding-right: 4px;
+    font-size: 10px;
+    line-height: 12px;
+    color: white;
+}
+
 @media (max-width: 768px) {
     .result-history table.table {
         font-size: 13px !important;
@@ -60,7 +95,6 @@
         font-size: 12px !important;
     }
 }
-
 </style>
 
 <!-- Start Breadcrumb -->
@@ -197,23 +231,32 @@
                         <th>Date</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
-                {% for res in request.user.mockresult_set.all %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ res.mock.title }}</td>
-                <td>{{ res.total }}</td>
-                <td>{{ res.attempted }}</td>
-                <td>{{ res.correct }}</td>
-                <td>{{ res.correct|floatformat:2 }}/{{ res.total }} ({{ res.correct|divisibleby:res.total|yesno:"100,0" }}%)</td>
-                <td>{{ res.created_at|date:"d M Y H:i" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No past results yet.</td>
-            </tr>
-            {% endfor %}
-                </tbody>
+    <tbody class="text-center">
+{% for res in request.user.mockresult_set.all %}
+<tr 
+    {% if res.score >= 80 %}
+        class="score-high"
+    {% elif res.score >= 50 %}
+        class="score-medium"
+    {% else %}
+        class="score-low"
+    {% endif %}
+>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ res.mock.title }}</td>
+    <td>{{ res.total }}</td>
+    <td>{{ res.attempted }}</td>
+    <td>{{ res.correct }}</td>
+    <td>{{ res.correct }}/{{ res.total }} ({{ res.score|floatformat:2 }}%)</td>
+    <td>{{ res.created_at|date:"d M Y H:i" }}</td>
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="7">No past results yet.</td>
+</tr>
+{% endfor %}
+</tbody>
             </table>
         </div>
     </div>
