@@ -21,10 +21,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('exams.html', views.exams, name='exams'),
-     path('mock.html', views.mock, name='mock'),
-    path('blogs.html', views.blogs, name='blogs'),
-    path('contact.html', views.contact, name='contact'),
+    path('exams/', views.exams, name='exams'),
+     path('mock/', views.mock, name='mock'),
+    path('blogs/', views.blogs, name='blogs'),
+    path('contact/', views.contact, name='contact'),
      path('register/', views.register_view, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
