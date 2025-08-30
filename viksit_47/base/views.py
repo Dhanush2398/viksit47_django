@@ -136,5 +136,5 @@ def equipments_view(request):
     return render(request, "equipments.html")
 
 def equipments_view(request):
-    info_cards = InfoCard.objects.all()
+    info_cards = InfoCard.objects.all().order_by('-id')
     return render(request, "equipments.html", {"info_cards": info_cards})
