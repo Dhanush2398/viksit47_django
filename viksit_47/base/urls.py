@@ -34,6 +34,6 @@ urlpatterns = [
      path("mock/<int:mock_id>/", views.mock, name="mock"),
     path('mock/', views.mock_redirect, name='mock_redirect'),
       path('mock/<int:mock_id>/submit/', views.submit_mock, name='submit_mock'),
-      path("equipments/", views.equipments_view, name="Equipments"), 
+     path("equipments/", views.equipments_view, name="equipments"),
 ]
 

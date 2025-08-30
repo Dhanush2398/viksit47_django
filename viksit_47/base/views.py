@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Mock, Question, Option, MockResult
+from .models import Mock, Question, Option, MockResult, InfoCard
 
 
 
@@ -134,3 +134,7 @@ def profile(request):
 
 def equipments_view(request):
     return render(request, "equipments.html")
+
+def equipments_view(request):
+    info_cards = InfoCard.objects.all()
+    return render(request, "equipments.html", {"info_cards": info_cards})
