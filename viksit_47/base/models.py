@@ -17,7 +17,7 @@ class Mock(models.Model):
         return f"{self.title} - {self.get_difficulty_display()}"
     
 class Question(models.Model):
-    mock = models.ForeignKey(Mock, related_name="questions", on_delete=models.CASCADE,null=True, blank=True)
+    mock = models.ForeignKey(Mock, related_name="questions", on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
     image = models.ImageField(upload_to="mock_questions/", blank=True, null=True)
 
@@ -52,3 +52,12 @@ class MockResult(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.mock.title} ({self.score:.2f}%)"
+    
+   
+class InfoCard(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to="info_cards/", blank=True, null=True)
+
+    def __str__(self):
+        return self.title

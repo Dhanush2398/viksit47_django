@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile - Viksit47{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="row">
+    {% for card in info_cards %}
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if card.image %}
+            <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.title }}">
+          {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="No Image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ card.title }}</h5>
+            <p class="card-text">{{ card.description|truncatewords:20 }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No cards available.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

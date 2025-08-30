@@ -131,3 +131,6 @@ def profile_view(request):
 def profile(request):
     results = MockResult.objects.filter(user=request.user).order_by("-created_at")
     return render(request, "profile.html", {"results": results})
+
+def equipments_view(request):
+    return render(request, "equipments.html")
