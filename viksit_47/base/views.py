@@ -8,12 +8,12 @@ from .models import Mock, Question, Option, MockResult
 
 
 def home(request):
-    mocks = Mock.objects.all()
+    mocks = Mock.objects.all().order_by('-id')
     return render(request, "index.html", {"mocks": mocks})
 
 
 def exams(request):
-    mocks = Mock.objects.all()
+    mocks = Mock.objects.all().order_by('-id')
     return render(request, "exams.html", {"mocks": mocks})
 
 
