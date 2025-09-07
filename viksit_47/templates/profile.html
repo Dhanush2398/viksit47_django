@@ -134,6 +134,11 @@
                         <li class="nav-item" role="presentation">
                           <button class="nav-link" id="tab_results" data-bs-toggle="tab" data-bs-target="#tabs_results" type="button" role="tab" aria-controls="tabs_results" aria-selected="false">Results</button>
                         </li>
+                        <!-- Purchased Courses Tab -->
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="tab_courses" data-bs-toggle="tab" data-bs-target="#tabs_courses" type="button" role="tab" aria-controls="tabs_courses" aria-selected="false">Purchased Courses</button>
+</li>
+
                     </ul>
                     <!-- End Tab Nav -->
 
@@ -169,6 +174,58 @@
         </ul>
     </div>
 </div>
+
+<!-- Purchased Courses Tab -->
+<div class="tab-pane fade" id="tabs_courses" role="tabpanel" aria-labelledby="tab_courses">
+    <div class="info title">
+        <h4 class="mb-3">🎓 Purchased Courses</h4>
+        {% if purchased_courses %}
+        <div class="result-history">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Course</th>
+                        <th>Amount Paid (₹)</th>
+                        <th>Transaction ID</th>
+                        <th>Valid Until</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for sub in purchased_courses %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if sub.course_slug == "agri_quota" %}
+                                Agriculture Quota Practical Exam
+                            {% elif sub.course_slug == "cuet_ug_icar" %}
+                                CUET UG Agriculture – ICAR
+                            {% else %}
+                                {{ sub.course_slug|capfirst }}
+                            {% endif %}
+                        </td>
+                        <td>{{ sub.amount }}</td>
+                        <td>{{ sub.transaction_id|default:"DUMMY" }}</td>
+                        <td>{{ sub.end_date|date:"d M Y" }}</td>
+                        <td>
+                            {% if sub.end_date >= today %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Expired</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No courses purchased yet.</p>
+        {% endif %}
+    </div>
+</div>
+
 <!-- Results Tab -->
 <div class="tab-pane fade" id="tabs_results" role="tabpanel" aria-labelledby="tab_results">
     <div class="info title">

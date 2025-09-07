@@ -1,29 +1,35 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import Mock, Question, Option, Author, StudyMaterial, StudyMaterialItem
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import Profile
+from .models import Profile, CourseSubscription, Mock, Question, Option, Author, StudyMaterial, StudyMaterialItem
 
 class ProfileInline(admin.StackedInline):
     model = Profile
-    can_delete = False
+    can_delete = False 
     verbose_name_plural = "Profile"
 
+
+class CourseSubscriptionInline(admin.TabularInline):
+    model = CourseSubscription
+    extra = 0
+    readonly_fields = ("course_slug", "amount", "is_paid", "end_date", "transaction_id")
+    can_delete = False
+
+
 class UserAdmin(BaseUserAdmin):
-    inlines = (ProfileInline,)
+    inlines = (ProfileInline, CourseSubscriptionInline)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
 
 class OptionInline(admin.TabularInline):
     model = Option
     extra = 4
 
-
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('text', 'mock')
     inlines = [OptionInline]
-
 
 class MockAdmin(admin.ModelAdmin):
     list_display = ('title', 'course', 'difficulty', 'time_limit')
@@ -34,11 +40,9 @@ admin.site.register(Mock, MockAdmin)
 admin.site.register(Question, QuestionAdmin)
 
 
-
 class StudyMaterialItemInline(admin.TabularInline): 
     model = StudyMaterialItem
     extra = 1
-
 
 @admin.register(StudyMaterial)
 class StudyMaterialAdmin(admin.ModelAdmin):
@@ -59,4 +63,3 @@ class AuthorAdmin(admin.ModelAdmin):
         return "-"
     image_preview.allow_tags = True
     image_preview.short_description = 'Image Preview'
-

@@ -10,14 +10,13 @@ from .forms import RegisterForm
 
 auth_api = 'https://api-preprod.phonepe.com/apis/pg-sandbox'
 pg_api = 'https://api-preprod.phonepe.com/apis/pg-sandbox'
+
 client_id = "TESTVVUAT_2502041721357207510164"
 client_secret = "ZTcxNDQyZjUtZjQ3Mi00MjJmLTgzOWYtMWZmZWQ2ZjdkMzVi"
 client_version = "1"
 redirect_url = "http://127.0.0.1:8000"
 
 
-def home(request):
-    return render(request, "index.html")
 
 def about(request):
     return render(request, "about.html")
@@ -65,18 +64,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
-
-
-@login_required
-def profile_view(request):
-    return render(request, "profile.html", {"user": request.user})
-
 @login_required
 def profile(request):
     results = MockResult.objects.filter(user=request.user).order_by("-created_at")
-    subscriptions = CourseSubscription.objects.filter(user=request.user, is_paid=True, end_date__gte=date.today())
-    purchased_courses = [s.course_slug for s in subscriptions]
-    return render(request, "profile.html", {"results": results, "purchased_courses": purchased_courses})
+    subscriptions = CourseSubscription.objects.filter(
+        user=request.user, 
+        is_paid=True, 
+        end_date__gte=date.today()
+    ).order_by("-end_date") 
+
+    return render(request, "profile.html", {
+        "user": request.user,       
+        "results": results,        
+        "purchased_courses": subscriptions, 
+        "today": date.today(),     
+    })
 
 @login_required
 def cuet_view(request):
@@ -156,7 +158,6 @@ def studymaterial_detail(request, pk):
 
 @login_required
 def buy_course_payment(request, course_slug):
- 
     if course_slug == "agri_quota":
         price_online = 2000
         price_offline = 2500
@@ -168,7 +169,6 @@ def buy_course_payment(request, course_slug):
         "price_online": price_online,
         "price_offline": price_offline
     })
-
 @login_required
 def subscribe_1year(request, course_slug):
     if request.method == "POST":
@@ -265,3 +265,16 @@ def has_active_subscription(user, course_slug=None):
         qs = qs.filter(course_slug=course_slug)
     return qs.exists()
 
+def home(request):
+    if request.user.is_authenticated:
+        purchased_courses = CourseSubscription.objects.filter(
+            user=request.user,
+            is_paid=True,
+            end_date__gte=date.today()
+        ).values_list("course_slug", flat=True)
+    else:
+        purchased_courses = []
+
+    return render(request, "index.html", {
+        "purchased_courses": purchased_courses,
+    })
