@@ -169,6 +169,7 @@ def buy_course_payment(request, course_slug):
         "price_online": price_online,
         "price_offline": price_offline
     })
+
 @login_required
 def subscribe_1year(request, course_slug):
     if request.method == "POST":
