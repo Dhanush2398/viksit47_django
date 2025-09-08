@@ -27,6 +27,15 @@ def contact(request):
 def gallery(request):
     return render(request, "gallery.html")
 
+def terms_view(request):
+    return render(request, "terms.html")
+
+def privacy_view(request):
+    return render(request, "privacy.html")
+
+def refund_view(request):
+    return render(request, "refund.html")
+
 def exams(request):
     mocks = Mock.objects.all().order_by('-id')
     return render(request, "exams.html", {"mocks": mocks})
@@ -64,6 +73,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
+
 @login_required
 def profile(request):
     results = MockResult.objects.filter(user=request.user).order_by("-created_at")
@@ -143,18 +153,12 @@ import requests
 
 from .models import Course, CourseSubscription, Mock, StudyMaterial, Author
 
-# -------------------------------
-# Helper: check active subscription
-# -------------------------------
 def has_active_subscription(user, course_id=None):
     qs = CourseSubscription.objects.filter(user=user, is_paid=True, end_date__gte=date.today())
     if course_id:
         qs = qs.filter(course_id=course_id)
     return qs.exists()
 
-# -------------------------------
-# Home page
-# -------------------------------
 def home(request):
     courses = Course.objects.all()
     purchased_courses = []
@@ -170,9 +174,7 @@ def home(request):
         "purchased_courses": purchased_courses
     })
 
-# -------------------------------
-# Buy course / payment page
-# -------------------------------
+
 @login_required
 def buy_course_payment(request, course_id):
     course = get_object_or_404(Course, id=course_id)
@@ -180,9 +182,7 @@ def buy_course_payment(request, course_id):
         "course": course,
     })
 
-# -------------------------------
-# Subscribe 1 year (payment process)
-# -------------------------------
+
 @login_required
 def subscribe_1year(request, course_id):
     course = get_object_or_404(Course, id=course_id)
@@ -191,7 +191,7 @@ def subscribe_1year(request, course_id):
         mode = request.POST.get("mode", "online")
         amount = course.price_online if mode == "online" else course.price_offline
 
-        # Create subscription
+   
         uid = shortuuid.uuid()
         subscription = CourseSubscription.objects.create(
             user=request.user,
@@ -202,7 +202,7 @@ def subscribe_1year(request, course_id):
             is_paid=False,
         )
 
-        # PhonePe token request
+      
         token_resp = requests.post(auth_api + "/v1/oauth/token", data={
             "client_id": client_id,
             "client_secret": client_secret,
@@ -239,12 +239,10 @@ def subscribe_1year(request, course_id):
 
     return redirect('buy_course_payment', course_id=course.id)
 
-# -------------------------------
-# Subscription return (after payment)
-# -------------------------------
+
 @login_required
 def subscription_return(request, uid):
-    # Get access token
+  
     token_resp = requests.post(auth_api + "/v1/oauth/token", data={
         "client_id": client_id,
         "client_secret": client_secret,
@@ -253,7 +251,6 @@ def subscription_return(request, uid):
     }, headers={"Content-Type": "application/x-www-form-urlencoded"})
     access_token = token_resp.json().get('access_token')
 
-    # Check payment status
     response = requests.get(f"{pg_api}/checkout/v2/order/{uid}/status",
                             headers={"Content-Type": "application/json",
                                      "Authorization": f"O-Bearer {access_token}"})
@@ -271,14 +268,11 @@ def subscription_return(request, uid):
         messages.error(request, "Payment failed or pending. Try again.")
         return redirect("buy_course_payment", course_id=subscription.course.id)
 
-# -------------------------------
-# Course detail page
-# -------------------------------
+
 @login_required
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
-    # Check if the user has an active subscription
     if not has_active_subscription(request.user, course_id=course.id):
         messages.info(request, f"You need to purchase the {course.title} course to access this content.")
         return redirect('buy_course_payment', course_id=course.id)
@@ -293,3 +287,4 @@ def course_detail(request, course_id):
         "study_materials": study_materials,
         "authors": authors,
     })
+

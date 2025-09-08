@@ -38,6 +38,8 @@ urlpatterns = [
     path('studymaterials/<int:pk>/', views.studymaterial_detail, name='studymaterial_detail'),
     path('course/<int:course_id>/', views.course_detail, name='course_detail'),
     path('buy_course/<int:course_id>/', views.buy_course_payment, name='buy_course_payment'),
-
+    path('terms-and-conditions/', views.terms_view, name='terms'),
+    path('privacy-policy/', views.privacy_view, name='privacy'),
+    path('refund-policy/', views.refund_view, name='refund'),
 ]
 
