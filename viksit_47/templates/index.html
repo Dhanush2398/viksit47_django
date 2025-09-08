@@ -70,7 +70,6 @@
 </button>
   </div>
     </div>
-
 <!-- Start Courses -->
 <section id="event" class="event-area default-padding">
     <div class="container">
@@ -89,59 +88,59 @@
 
         <div class="event-items">
             <div class="row">
-               {% for course in courses %}
-               <div class="col-lg-6">
-                   <div class="card mb-4">
-                       {% if course.image %}
-                           <img src="{{ course.image.url }}" class="card-img-top">
-                       {% endif %}
-                       <div class="card-body">
-                           <h5>{{ course.title }}</h5>
-                           <!-- Show Mode -->
-                           <p>
-                               <strong>Mode:</strong> 
-                               {% if course.mode == 'online' %}
-                                   Online
-                               {% elif course.mode == 'offline' %}
-                                   Offline
-                               {% else %}
-                                   Online & Offline
-                               {% endif %}
-                           </p>
+                {% for course in courses %}
+                <div class="col-lg-6">
+                    <div class="item vertical">
+                        <div class="thumb">
+                            {% if course.image %}
+                                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                            {% else %}
+                                <img src="{% static 'img/courses/default.jpg' %}" alt="{{ course.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="info">
+                            <h4>
+                                <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+                            </h4>
+                            <p>
+                                <strong>Mode :</strong>
+                                {% if course.mode == 'online' %} Online
+                                {% elif course.mode == 'offline' %} Offline
+                                {% else %} Online & Offline
+                                {% endif %}
+                            </p>
 
-                           <!-- Show Price -->
-                           <p>
-                               <strong>Price:</strong> 
-                               {% if course.mode == 'online' or course.mode == 'both' %}
-                                   ₹{{ course.price_online }}
-                               {% endif %}
-                               {% if course.mode == 'offline' or course.mode == 'both' %}
-                                   {% if course.mode == 'both' %}|{% endif %}
-                                   Offline: ₹{{ course.price_offline }}
-                               {% endif %}
-                           </p>
+                            <p>
+                                <strong>Price :</strong>
+                                {% if course.mode == 'online' or course.mode == 'both' %}
+                                    ₹{{ course.price_online }}
+                                {% endif %}
+                                {% if course.mode == 'offline' or course.mode == 'both' %}
+                                    {% if course.mode == 'both' %}|{% endif %}
+                                    ₹{{ course.price_offline }}
+                                {% endif %}
+                            </p>
 
-                           <!-- Buy/View button -->
-                           <p>
-                               {% if user.is_authenticated and course.id in purchased_courses %}
-                                   <a href="{% url 'course_detail' course.id %}" class="btn btn-success">View Course</a>
-                               {% else %}
-                                   <a href="{% url 'buy_course_payment' course.id %}" class="btn btn-danger">Buy Course</a>
-                               {% endif %}
-                           </p>
-                       </div>
-                   </div>
-               </div>
-               {% empty %}
-               <p>No courses available</p>
-               {% endfor %}
+                            {% if user.is_authenticated and course.id in purchased_courses %}
+                                <a href="{% url 'course_detail' course.id %}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-book"></i> View Course
+                                </a>
+                            {% else %}
+                                <a href="{% url 'buy_course_payment' course.id %}" class="btn btn-dark btn-sm">
+                                    <i class="fas fa-shopping-cart"></i> Buy Course
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>No courses available</p>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
 <!-- End Courses -->
-
-
 
 
 <div class="about-area default-padding">

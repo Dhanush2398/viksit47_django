@@ -1,12 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import (
-    Profile, CourseSubscription, Mock, Question, Option,
-    Author, StudyMaterial, StudyMaterialItem, Course
+from .models import ( Profile, CourseSubscription, Mock, Question, Option,Author, StudyMaterial, StudyMaterialItem, Course
 )
 
-# --- Profile inline in User admin ---
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -24,13 +22,11 @@ class UserAdmin(BaseUserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-
-# --- Options Inline in Question ---
 class OptionInline(admin.TabularInline):
     model = Option
     extra = 4
 
-# --- Question Admin ---
+
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('text', 'get_mock', 'get_course')
     inlines = [OptionInline]
@@ -44,21 +40,17 @@ class QuestionAdmin(admin.ModelAdmin):
         return obj.mock.course.title
     get_course.short_description = 'Course'
 
-
-# --- Mock Admin ---
 class MockAdmin(admin.ModelAdmin):
     list_display = ('title', 'course', 'difficulty', 'time_limit')
     list_filter = ('course', 'difficulty')
     search_fields = ('title',)
 
 
-# --- Study Material Item Inline ---
 class StudyMaterialItemInline(admin.TabularInline):
     model = StudyMaterialItem
     extra = 1
 
 
-# --- Study Material Admin ---
 @admin.register(StudyMaterial)
 class StudyMaterialAdmin(admin.ModelAdmin):
     list_display = ("title", "course")
@@ -67,7 +59,6 @@ class StudyMaterialAdmin(admin.ModelAdmin):
     inlines = [StudyMaterialItemInline]
 
 
-# --- Author Admin ---
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('name', 'education', 'image_preview')
@@ -87,7 +78,5 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
-
-# --- Register Mock and Question ---
 admin.site.register(Mock, MockAdmin)
 admin.site.register(Question, QuestionAdmin)
