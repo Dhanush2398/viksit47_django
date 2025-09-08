@@ -174,7 +174,6 @@
         </ul>
     </div>
 </div>
-
 <!-- Purchased Courses Tab -->
 <div class="tab-pane fade" id="tabs_courses" role="tabpanel" aria-labelledby="tab_courses">
     <div class="info title">
@@ -186,6 +185,7 @@
                     <tr>
                         <th>#</th>
                         <th>Course</th>
+                        <th>Mode</th>
                         <th>Amount Paid (₹)</th>
                         <th>Transaction ID</th>
                         <th>Valid Until</th>
@@ -196,15 +196,8 @@
                     {% for sub in purchased_courses %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>
-                            {% if sub.course_slug == "agri_quota" %}
-                                Agriculture Quota Practical Exam
-                            {% elif sub.course_slug == "cuet_ug_icar" %}
-                                CUET UG Agriculture – ICAR
-                            {% else %}
-                                {{ sub.course_slug|capfirst }}
-                            {% endif %}
-                        </td>
+                        <td>{{ sub.course.title }}</td>
+                        <td>{{ sub.course.get_mode_display }}</td> <!-- Shows Online/Offline/Both -->
                         <td>{{ sub.amount }}</td>
                         <td>{{ sub.transaction_id|default:"DUMMY" }}</td>
                         <td>{{ sub.end_date|date:"d M Y" }}</td>
@@ -225,6 +218,7 @@
         {% endif %}
     </div>
 </div>
+
 
 <!-- Results Tab -->
 <div class="tab-pane fade" id="tabs_results" role="tabpanel" aria-labelledby="tab_results">
