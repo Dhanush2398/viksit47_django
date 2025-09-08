@@ -21,15 +21,6 @@
                                 <h3 data-animation="animated slideInLeft">Empowering Youth through Education for Viksit bharat 2047</h3>
                                 <h1 data-animation="animated slideInUp">Offline coaching at your own district centres to show live specimens + online website access
                              </h1>
-                            {% if user.is_authenticated and 'agri_quota' in purchased_courses %}
-                             <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="{% url 'agriculturequota' %}">
-                                 Start Practicing
-                             </a>
-                            {% else %}
-                              <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="{% url 'buy_course_payment' 'agri_quota' %}">
-                                Buy Agriculture Quota Course to Start Practicing
-                             </a>
-                            {% endif %}
                             <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="{% url 'contact' %}">Contact</a>
                             </div>
                         </div>
@@ -53,15 +44,6 @@
                             <div class="content">
                                 <h3 data-animation="animated slideInLeft">Practice. Improve. Achieve.</h3>
                                 <h1 data-animation="animated slideInUp">High-Quality Mock Tests for Agriculture quota practical exam,CUET UG Agriculture - ICAR.</h1>
-                               {% if user.is_authenticated and 'cuet_ug_icar' in purchased_courses %}
-                             <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="{% url 'cuet' %}">
-                                 Start Practicing
-                             </a>
-                            {% else %}
-                              <a data-animation="animated slideInUp" class="btn btn-light border btn-md" href="{% url 'buy_course_payment' 'cuet_ug_icar' %}">
-                                Buy CUET UG Course to Start Practicing
-                             </a>
-                            {% endif %}
                                 <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="{% url 'contact' %}">Contact</a>
                             </div>
                         </div>
@@ -89,11 +71,7 @@
   </div>
     </div>
 
-
-
-
-<!-- Start Courses
-============================================= -->
+<!-- Start Courses -->
 <section id="event" class="event-area default-padding">
     <div class="container">
         <div class="row">
@@ -102,9 +80,8 @@
                     <h2>Our Courses</h2>
                     <p>
                         At Viksit47 we provide high-quality preparation resources 
-                        including mock tests, detailed study materials, and expert guidance 
-                        to help students excel in competitive exams. Here are our upcoming 
-                        focus programs designed for Agriculture aspirants.
+                        including mock tests, study materials, and expert guidance 
+                        to help students excel in competitive exams.
                     </p>
                 </div>
             </div>
@@ -112,88 +89,57 @@
 
         <div class="event-items">
             <div class="row">
+               {% for course in courses %}
+               <div class="col-lg-6">
+                   <div class="card mb-4">
+                       {% if course.image %}
+                           <img src="{{ course.image.url }}" class="card-img-top">
+                       {% endif %}
+                       <div class="card-body">
+                           <h5>{{ course.title }}</h5>
+                           <!-- Show Mode -->
+                           <p>
+                               <strong>Mode:</strong> 
+                               {% if course.mode == 'online' %}
+                                   Online
+                               {% elif course.mode == 'offline' %}
+                                   Offline
+                               {% else %}
+                                   Online & Offline
+                               {% endif %}
+                           </p>
 
-             
-                <div class="col-lg-6">
-                    <div class="item vertical">
-                        <div class="thumb">
-                            <img src="{% static 'img/courses/1.jpeg' %}" alt="Agriculture Exam">
-                        </div>
-                        <div class="info">
-                            <h4>
-                                <a href="{% url 'agriculturequota' %}">Agriculture Quota Practical Exam</a>
-                            </h4>
-                            <p>
-                                Specially designed sessions to help students prepare for 
-                                Agriculture Quota Practical Exams. Includes hands-on practice, 
-                                doubt-clearing, and subject-wise guidance from experts.
-                            </p>
+                           <!-- Show Price -->
+                           <p>
+                               <strong>Price:</strong> 
+                               {% if course.mode == 'online' or course.mode == 'both' %}
+                                   ₹{{ course.price_online }}
+                               {% endif %}
+                               {% if course.mode == 'offline' or course.mode == 'both' %}
+                                   {% if course.mode == 'both' %}|{% endif %}
+                                   Offline: ₹{{ course.price_offline }}
+                               {% endif %}
+                           </p>
 
-                            <p>
-                                Price: 
-                                {% if user.is_authenticated %}
-                                    {% if 'agri_quota' in purchased_courses %}
-                                        {% if course_mode == 'offline' %}
-                                            ₹2,500 (Offline)
-                                        {% else %}
-                                            ₹2,000 (Online)
-                                        {% endif %}
-                                    {% else %}
-                                        Online: ₹2,000 | Offline: ₹2,500
-                                    {% endif %}
-                                {% else %}
-                                    Online: ₹2,000 | Offline: ₹2,500
-                                {% endif %}
-                            </p>
-
-                            {% if user.is_authenticated and 'agri_quota' in purchased_courses %}
-                                <a href="{% url 'agriculturequota' %}" class="btn btn-success btn-sm">
-                                    <i class="fas fa-book"></i> View Course
-                                </a>
-                            {% else %}
-                                <a href="{% url 'buy_course_payment' 'agri_quota' %}" class="btn btn-dark btn-sm">
-                                    <i class="fas fa-shopping-cart"></i> Buy Course
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="item vertical">
-                        <div class="thumb">
-                            <img src="{% static 'img/courses/2.png' %}" alt="CUET UG Agriculture - ICAR">
-                        </div>
-                        <div class="info">
-                            <h4>
-                                <a href="{% url 'cuet' %}">CUET UG Agriculture – ICAR</a>
-                            </h4>
-                            <p>
-                                Comprehensive preparation for CUET UG Agriculture with 
-                                complete ICAR syllabus coverage. Access to full-length 
-                                mock tests, study materials, and performance analysis.
-                            </p>
-
-                            <p>Price: ₹2,000 (Online only)</p>
-
-                            {% if user.is_authenticated and 'cuet_ug_icar' in purchased_courses %}
-                                <a href="{% url 'cuet' %}" class="btn btn-success btn-sm">
-                                    <i class="fas fa-book"></i> View Course
-                                </a>
-                            {% else %}
-                                <a href="{% url 'buy_course_payment' 'cuet_ug_icar' %}" class="btn btn-dark btn-sm">
-                                    <i class="fas fa-shopping-cart"></i> Buy Course
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
+                           <!-- Buy/View button -->
+                           <p>
+                               {% if user.is_authenticated and course.id in purchased_courses %}
+                                   <a href="{% url 'course_detail' course.id %}" class="btn btn-success">View Course</a>
+                               {% else %}
+                                   <a href="{% url 'buy_course_payment' course.id %}" class="btn btn-danger">Buy Course</a>
+                               {% endif %}
+                           </p>
+                       </div>
+                   </div>
+               </div>
+               {% empty %}
+               <p>No courses available</p>
+               {% endfor %}
             </div>
         </div>
     </div>
 </section>
-<!-- End Courses-->
+<!-- End Courses -->
 
 
 

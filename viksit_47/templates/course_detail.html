@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} - Viksit47{% endblock %}
+
+{% block content %}
+
+<h2>{{ course.title }}</h2>
+<p>{{ course.description }}</p>
+
+<!-- Mock Tests -->
+{% if mocks %}
+<div class="row">
+    {% for mock in mocks %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                {% if mock.image %}
+                    <img src="{{ mock.image.url }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h5>{{ mock.title }}</h5>
+                    <a href="{% url 'mock' mock.id %}" class="btn btn-primary">Take Test</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No mock tests available.</p>
+{% endif %}
+
+<!-- Study Materials -->
+{% if study_materials %}
+<div class="row">
+    {% for material in study_materials %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                {% if material.image %}
+                    <img src="{{ material.image.url }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h5>{{ material.title }}</h5>
+                    <a href="{% url 'studymaterial_detail' material.id %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No study materials available.</p>
+{% endif %}
+
+<!-- Authors -->
+<div class="row">
+    {% for author in authors %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="author-card">
+                {% if author.image %}<img src="{{ author.image.url }}">{% endif %}
+                <h3>{{ author.name }}</h3>
+                <p>{{ author.education }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -30,14 +30,14 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('profile/', views.profile, name='profile'),
-    path('subscribe/<str:course_slug>/', views.subscribe_1year, name='subscribe_1year'),
+    path('subscribe/<int:course_id>/', views.subscribe_1year, name='subscribe_1year'),
     path('subscription-return/<str:uid>/', views.subscription_return, name='subscription_return'),
     path('mock/<int:mock_id>/', views.mock, name='mock'),
     path('submit-mock/<int:mock_id>/', views.submit_mock, name='submit_mock'),
     path('studymaterials/', views.studymaterials_view, name='studymaterials'),
     path('studymaterials/<int:pk>/', views.studymaterial_detail, name='studymaterial_detail'),
-    path('agriculturequota/', views.agriculture_quota_view, name='agriculturequota'),
-    path('cuet/', views.cuet_view, name='cuet'),
-    path('buy_course/<str:course_slug>/', views.buy_course_payment, name='buy_course_payment'),
+    path('course/<int:course_id>/', views.course_detail, name='course_detail'),
+    path('buy_course/<int:course_id>/', views.buy_course_payment, name='buy_course_payment'),
+
 ]
 

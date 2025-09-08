@@ -1,20 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import Profile, CourseSubscription, Mock, Question, Option, Author, StudyMaterial, StudyMaterialItem
+from .models import (
+    Profile, CourseSubscription, Mock, Question, Option,
+    Author, StudyMaterial, StudyMaterialItem, Course
+)
 
+# --- Profile inline in User admin ---
 class ProfileInline(admin.StackedInline):
     model = Profile
-    can_delete = False 
+    can_delete = False
     verbose_name_plural = "Profile"
-
 
 class CourseSubscriptionInline(admin.TabularInline):
     model = CourseSubscription
     extra = 0
-    readonly_fields = ("course_slug", "amount", "is_paid", "end_date", "transaction_id")
+    readonly_fields = ("amount", "is_paid", "end_date", "transaction_id")
     can_delete = False
-
 
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline, CourseSubscriptionInline)
@@ -23,27 +25,40 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 
+# --- Options Inline in Question ---
 class OptionInline(admin.TabularInline):
     model = Option
     extra = 4
 
+# --- Question Admin ---
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('text', 'mock')
+    list_display = ('text', 'get_mock', 'get_course')
     inlines = [OptionInline]
+    search_fields = ('text',)
 
+    def get_mock(self, obj):
+        return obj.mock.title
+    get_mock.short_description = 'Mock'
+
+    def get_course(self, obj):
+        return obj.mock.course.title
+    get_course.short_description = 'Course'
+
+
+# --- Mock Admin ---
 class MockAdmin(admin.ModelAdmin):
     list_display = ('title', 'course', 'difficulty', 'time_limit')
     list_filter = ('course', 'difficulty')
     search_fields = ('title',)
 
-admin.site.register(Mock, MockAdmin)
-admin.site.register(Question, QuestionAdmin)
 
-
-class StudyMaterialItemInline(admin.TabularInline): 
+# --- Study Material Item Inline ---
+class StudyMaterialItemInline(admin.TabularInline):
     model = StudyMaterialItem
     extra = 1
 
+
+# --- Study Material Admin ---
 @admin.register(StudyMaterial)
 class StudyMaterialAdmin(admin.ModelAdmin):
     list_display = ("title", "course")
@@ -52,6 +67,7 @@ class StudyMaterialAdmin(admin.ModelAdmin):
     inlines = [StudyMaterialItemInline]
 
 
+# --- Author Admin ---
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('name', 'education', 'image_preview')
@@ -63,3 +79,15 @@ class AuthorAdmin(admin.ModelAdmin):
         return "-"
     image_preview.allow_tags = True
     image_preview.short_description = 'Image Preview'
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ("title", "mode", "price_online", "price_offline")
+    search_fields = ("title",)
+
+
+
+# --- Register Mock and Question ---
+admin.site.register(Mock, MockAdmin)
+admin.site.register(Question, QuestionAdmin)

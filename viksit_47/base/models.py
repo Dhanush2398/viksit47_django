@@ -13,21 +13,29 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+class Course(models.Model):
+    MODE_CHOICES = [
+        ('online', 'Online'),
+        ('offline', 'Offline'),
+        ('both', 'Online & Offline'),
+    ]
 
-class Course(models.TextChoices):
-    AGRI_QUOTA = 'agri_quota', 'Agriculture Quota Practical Exam'
-    CUET_UG_ICAR = 'cuet_ug_icar', 'CUET UG Agriculture – ICAR'
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to="courses/", blank=True, null=True)
+    mode = models.CharField(max_length=10, choices=MODE_CHOICES, default='both')
+    price_online = models.PositiveIntegerField(default=2000)
+    price_offline = models.PositiveIntegerField(default=2500)
+
+    def __str__(self):
+        return self.title
 
 class Mock(models.Model):
-    course = models.CharField(
-        max_length=20,
-        choices=Course.choices,
-        default=Course.AGRI_QUOTA,
-        verbose_name="Course"
-    )
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="mocks")
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="mock_tests/", blank=True, null=True)
-    time_limit = models.PositiveIntegerField(help_text="Time limit in minutes", default=30)
+    time_limit = models.PositiveIntegerField(default=30)
     DIFFICULTY_CHOICES = [
         ('easy', 'Easy'),
         ('medium', 'Medium'),
@@ -36,7 +44,14 @@ class Mock(models.Model):
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, default='medium')
 
     def __str__(self):
-        return f"{self.title} - {self.get_difficulty_display()} ({self.get_course_display()})"
+       
+        return f"{self.course.title} - {self.title} ({self.get_difficulty_display()})"
+
+class StudyMaterial(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="study_materials")
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="study_materials/", blank=True, null=True)
+
 
     
 class Question(models.Model):
@@ -77,18 +92,6 @@ class MockResult(models.Model):
         return f"{self.user.username} - {self.mock.title} ({self.score:.2f}%)"
   
 
-class StudyMaterial(models.Model):
-    course = models.CharField(
-        max_length=20,
-        choices=Course.choices,
-        default=Course.AGRI_QUOTA,
-        verbose_name="Course"
-    )
-    title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="study_materials/", blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.title} ({self.get_course_display()})"
 
 class StudyMaterialItem(models.Model):
     study_material = models.ForeignKey(
@@ -114,7 +117,7 @@ class Author(models.Model):
 
 class CourseSubscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course_slug = models.CharField(max_length=50) 
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     end_date = models.DateField()
     uu_id = models.CharField(max_length=100, unique=True)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
@@ -122,4 +125,7 @@ class CourseSubscription(models.Model):
     is_paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.user.username} - {self.course_slug}"
+        return f"{self.user.username} - {self.course.title}"
+
+    
+

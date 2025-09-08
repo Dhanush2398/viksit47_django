@@ -65,43 +65,33 @@
 }
 </style>
 
-
 <div class="payment-container">
     <h2>Complete Payment</h2>
 
-    <p><strong>Course:</strong>
-        {% if course_slug == 'agri_quota' %}
-            Agriculture Quota Practical Exam
-        {% else %}
-            CUET UG Agriculture – ICAR
-        {% endif %}
-    </p>
+    <p><strong>Course:</strong> {{ course.title }}</p>
 
-    <form method="post" id="payment-form" action="{% url 'subscribe_1year' course_slug %}">
+    <form method="post" action="{% url 'subscribe_1year' course.id %}">
         {% csrf_token %}
 
-        {% if course_slug == 'agri_quota' %}
+        {% if course.mode == 'both' %}
             <label for="mode">Select Mode:</label>
-            <select id="mode" name="mode">
-                <option value="online">Online - ₹{{ price_online }}</option>
-                <option value="offline">Offline - ₹{{ price_offline }}</option>
+            <select id="mode" name="mode" required>
+                {% if course.price_online %}
+                    <option value="online">Online - ₹{{ course.price_online }}</option>
+                {% endif %}
+                {% if course.price_offline %}
+                    <option value="offline">Offline - ₹{{ course.price_offline }}</option>
+                {% endif %}
             </select>
-        {% else %}
+        {% elif course.mode == 'online' %}
             <input type="hidden" name="mode" value="online">
-            <p>Price: ₹{{ price_online }} (Online only)</p>
+            <p>Price: ₹{{ course.price_online }} (Online only)</p>
+        {% elif course.mode == 'offline' %}
+            <input type="hidden" name="mode" value="offline">
+            <p>Price: ₹{{ course.price_offline }} (Offline only)</p>
         {% endif %}
 
         <button type="submit">Proceed to Payment</button>
     </form>
 </div>
-<script>
-document.getElementById('pay-now').addEventListener('click', function() {
-    const form = document.getElementById('payment-form');
-    const mode = form.querySelector('select[name="mode"]')?.value || 'online';
-
-    const url = "{% url 'subscribe_1year' course_slug %}?mode=" + mode;
-    window.location.href = url;
-});
-</script>
 {% endblock %}
-
